@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+<div class="listas_admin">
+    <table class="carshop__table listas_admin__table listas_admin__table--anuncios">
+        <thead class="listas_admin__seldas">
+            <tr>
+                <th class="listas_admin__content">Nombre completo</th>
+                <th class="listas_admin__content">Email</th>
+                <th class="listas_admin__content">Genero</th>
+                <th class="listas_admin__content">Dirección de envío</th>
+                <th class="listas_admin__content">Ocupación</th>
+                <th class="listas_admin__content">Acción</th>
+            </tr>
+        </thead>
+        <tbody class="listas_admin__seldas">
+            {% for a in listarusuarios %}
+                <tr class="tr__body">
+                    <td class="listas_admin__content">{{a.get_full_name}}</td>
+                    <td class="listas_admin__content">{{a.email}}</td>
+                    <td class="listas_admin__content">{{a.genero}}</td>
+                    <td class="listas_admin__content">{{a.direccion_envio}}</td>
+                    <td class="listas_admin__content">{{a.ocupations}}</td>
+                    <td class="listas_admin__content">
+                        <a class="listas__edt_btn btn-art" href="{% url 'user_app:userEdit' a.id %}">
+                            Editar
+                        </a>
+                        <a class="listas__delete_btn btn-art" href="{% url 'user_app:usuario_eliminar' a.id %}">
+                            Eliminar
+                        </a> 
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="paginated__admin">
+    {% if is_paginated %}
+    <ul>
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{page_obj.previous_page_number}}">
+                    <img class="pagination__arrow" src="{% static 'img/arrow-left.svg' %}"> 
+                    Atras
+                </a>
+            </li>
+        {% endif %}
+        
+        {% for pagina in paginator.page_range %}
+            
+        {% ifequal pagina page_obj.number %} 
+        <li class="pagination-active"><span>{{pagina}}</span></li>
+        {% else %}
+        <li><a href="?page={{pagina}}" class="pagination-normal">{{ pagina }}</a></li>
+        {% endifequal %}
+
+        {% endfor %}
+            
+        {% if page_obj.has_next %}
+        <li>
+            <a href="?page={{page_obj.next_page_number}}">
+                Siguiente 
+                <img class="pagination__arrow" src="{% static 'img/arrow-right.svg' %}">
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+</div>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock content %}

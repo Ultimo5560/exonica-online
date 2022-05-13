@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+<div class="msj_container">
+    <div class="msj__datos">
+        <p>Nombre: {{formcontact.full_name}}</p>
+        <p>Email: {{formcontact.email}}</p>
+        <p>Celular: {{formcontact.celphone}}</p>
+    </div>
+    <h3>{{formcontact.full_name}} dice:</h3>
+    <div class="msj_container__container">
+        <h4>{{formcontact.message}}</h4>
+    </div>
+    <form action="{% url 'app_admin:procesar_msj' formcontact.id %}" method="post"> {% csrf_token %}
+        {% if formcontact.read == False %}
+            <button class="section_new__link section_new__link--opacity" type="submit">Marcar como leído</button>
+        {% else %}
+            <button class="section_new__link section_new__link--opacity" type="submit">Marcar como NO leído</button>
+        {% endif %}
+     </form>
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

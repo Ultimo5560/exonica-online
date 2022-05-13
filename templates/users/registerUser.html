@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock title %}
+{% block content %}
+
+<div class="register">
+	<figure class="register__figure">
+		<img src="{% static 'img/register-ilust.svg' %}" class="register__img" alt="">
+	</figure>
+	<form class="register__form" method="post">{% csrf_token %}
+		<div class="login__cabecera">
+			<img src="{% static 'img/exologo.png' %}" class="register__logo" alt="">
+			<h1>EXONICA</h1>
+			<h3>Soluciones en tecnologia</h3>
+		</div>
+		<a href="{% url 'user_app:login' %}" class="register_link">Ir a inicio de sesión</a>
+		{{form.as_p}}
+		<button type="submit" class="section_new__link section_new__link--opacity contact__btn">Registrarse</button>
+
+	</form>
+</div>
+{% endblock content %}

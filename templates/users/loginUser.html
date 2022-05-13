@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock title %}
+{% block content %}
+<div class="login">
+	<figure class="login__figure">
+		<img src="{% static 'img/login.svg' %}" class="login__img" alt="">
+	</figure>
+	<form class="login__form" method="post">{% csrf_token %}
+		<div class="login__cabecera">
+			<img src="{% static 'img/exologo.png' %}" class="login__logo" alt="">
+			<h1>EXONICA</h1>
+			<h3>Soluciones en tecnologia</h3>
+		</div>
+		<p> 
+			<div class="form__login_group">
+				<input type="email" name="email" class="login__inputs" placeholder=" " required id="id_email">
+				<label class="login__label">Email: </label>
+			</div>
+		</p>
+		<p> 
+			<div class="form__login_group">
+				<input type="password" name="password" class="login__inputs" placeholder=" " required id="id_password">
+				<label class="login__label">Password: </label>
+			</div>
+		</p>
+		<button type="submit" class="section_new__link section_new__link--opacity contact__btn">Iniciar sesión</button>
+		<a href="{% url 'user_app:Register' %}" class="register_link">Registrarse</a>
+	</form>
+</div>
+{% endblock content %}

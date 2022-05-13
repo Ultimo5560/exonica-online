@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Exonica online {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="contact">
+    <figure class="contact__figure">
+        <img src="{% static 'img/message-send.svg' %}" class="contact__img" alt="">
+    </figure>
+    <form action="{% url 'store_app:mensaje_contacto' %}" method="post" class="contact__form"> {% csrf_token %}
+        <h1>Mandanos mensaje</h1>
+        {{formContact.as_p}}
+        <button class="section_new__link section_new__link--opacity contact__btn" type="submit">Enviar</button>    
+    </form>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock content %}

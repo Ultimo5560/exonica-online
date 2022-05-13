@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+<div class="delete_container">
+    <div class="delete_container__container">
+        <form method="POST">{% csrf_token %}
+            <h3>¿Esta seguro de eliminar el mensaje de {{ formcontact.full_name }}?</h3>
+            <h2>{{ formcontact.message }}</h2>
+            <button class="delete__btn" type="submit">Eliminar</button>
+        </form>
+    </div>
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

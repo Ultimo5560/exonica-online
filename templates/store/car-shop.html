@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="carshop">
+    {% if productos %}
+        <div class="carshop__container_cab">
+                <div class="carshop__mas">
+                    <a href="{% url 'store_app:articulo_categoria' %}" type="submit" class="section_new__link--mas"> Ir por mas productos</a> 
+                </div>
+                <div class="carshop__total">
+                    <a href="#modal-pay" class="section_new__link--pay">Pagar ahora</a> 
+                    <p class="carshop__text_total">Total: ${{ total_all | floatformat:2 | intcomma }}</p>
+                </div>
+        </div>
+        <table class="carshop__table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Instalación</th>
+                    <th>Subtotal</th>
+                    <th>Quitar</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for p in productos %}
+                <tr>
+                    <td><img src="{{ p.product.imagen.url }}" class="carshop__image_product"> </td>
+                    <td><p class="table_name">Producto:</p> {{ p.product.title }}</td>
+                    <td><p class="table_name">Precio:</p> ${{ p.product.precio | floatformat:2 | intcomma }}</td>
+                    <td>{{ p.product.descripcion|safe }}</td>
+                    <td>
+                        <form action="{% url 'store_app:rest_car' p.id %}" method="post" class="carshop__form_arit_menos"> {% csrf_token %}
+                            <button type="submit" class="section_new__link section_new__link--opacity section_new__link--arit-menos">-</button>
+                        </form>
+                        
+                            <p class="table_name">Cantidad: </p> {{ p.count }}
+                        
+                        <form action="{% url 'store_app:sum_car' p.id %}" method="post" class="carshop__form_arit_mas"> {% csrf_token %}
+                            <button type="submit" class="section_new__link section_new__link--opacity section_new__link--arit">+</button>
+                        </form>
+                    </td>
+                        {% if p.instalacion == True %}
+                            {% if p.user.estado == 'Sonora' %}
+                            <td><p class="table_name">Instalación:</p> ${{p.product.precio_inst | floatformat:2 | intcomma}}</td>
+                            {% else %}
+                            <td><p class="table_name">Instalación:</p> ${{p.product.precio_inst_fuera | floatformat:2 | intcomma}}</td>
+                            {% endif %}
+                        {% else %}
+                        <td><p class="table_name">Instalación:</p> No solicitada</td>
+                        {% endif %}
+                    <td><p class="table_name">Subtotal:</p> ${{ p.subtotal }}</td>
+                    <td>
+                        <form action="{% url 'store_app:eliminar_producto' p.id %}" method="post"> {% csrf_token %}
+                            <button class="carshop__btn_delete" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="fill: rgba(255, 248, 248, 1);"><path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg>
+                            </button> 
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                    
+                
+            </tbody>
+        </table>
+        <div>
+            <form class="carshop__form_delete_all" action="{% url 'store_app:eliminar_todo' %}" method="post">{% csrf_token %}
+                <button type="submit" class="carshop__delete_all">Limpiar todo</button> 
+            </form>
+            
+        </div>
+    {% else %}
+        <div class="carshop__none-product">
+            <h1 class="carshop__none_text">Tu carrito esta vacio</h1>
+            <img class="carshop__none_img" src="{% static 'img/cart-none.svg' %}" alt="">
+        </div>
+    {% endif %}
+        
+    
+
+    <div id="modal-pay" class="payments">
+        <div class="payments__container">
+            <a href="#" class="payments__close">X</a>
+            <h2 class="payments__title">Elige un metodo de pago</h2>
+                <img class="carshop__img_trans" src="{% static 'img/payments-transfer.svg' %}" alt="">
+                <a class="payments__link--trans" href="{% url 'store_app:payment_trans' %}">    
+                    <p>Hacer deposito o transferencia</p>
+                </a>
+                <img class="carshop__img_card" src="{% static 'img/payments-card.svg' %}" alt="">
+                <a class="payments__link--card" href="{% url 'store_app:payment_paypal' %}">
+                    <p>Pagar con tarjeta</p>
+                </a>
+        </div>
+    </div>
+
+        
+    <div class="uk-container">
+            
+        {% if is_paginated %}
+        <ul class="uk-pagination uk-flex-center" uk-margin>
+            
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{page_obj.previous_page_number}}"><span class="uk-margin-small-right" uk-pagination-previous></span> Atras</a></li>
+            {% endif %}
+            
+            {% for pagina in paginator.page_range %}
+                
+                {% ifequal pagina page_obj.number %} 
+                <li class="uk-active"><span>{{pagina}}</span></li>
+                {% else %}
+                <li class="uk-flex-center"><a href="?page={{pagina}}">{{ pagina }}</a></li>
+                {% endifequal %}
+
+            {% endfor %}
+                
+            {% if page_obj.has_next %}
+            <li><a href="?page={{page_obj.next_page_number}}">Siguiente <span class="uk-margin-small-left" uk-pagination-next></span></a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock content %}

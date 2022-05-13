@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="compras">
+    <h1 class="compras__title">
+        Historial de las ultimas compras
+    </h1>
+    {% if historialCompras %}
+        {% for h in historialCompras %}
+        <div class="compras__container">
+            <table class="compras__table">
+                <thead>
+                    <tr>
+                        <td>No. Orden: {{h.id}}</td>
+                        <td>Fecha de compra</td>
+                        <td>Total</td>
+                        <td>Estatus</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>{{h.timestamp.date}}</td>
+                        <td>{{h.amount}}</td>
+                        <td class="compras__status">{{h.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="compras__articulos">
+                <thead>
+                    <tr>
+                        <td>Producto</td>
+                        <td>Cantidad</td>
+                        <td>Precio</td>
+                        <td>Instalación</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in h.detail_payment.all %}
+                    <tr>
+                        <td>{{detalle.product}}</td>
+                        <td>{{detalle.count}}</td>
+                        <td>{{detalle.price_sale}}</td>
+                        {% if detalle.instalacion == False %}
+                        <td>No solicitada</td>
+                        {% else %}
+                        <td>${{detalle.costo_instalacion}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                <tbody>
+            </table>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h1 class="compras__no">No tienes compras</h1>
+    {% endif %}
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

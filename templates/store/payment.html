@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+{% if productos %}
+<div id="contenido" class="carshop carshop--payment">
+        <table class="carshop__table table--payment">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Instalación</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for p in productos %}
+                <tr>
+                    <td><img src="{{ p.product.imagen.url }}" style="height: 50px;"> </td>
+                    <td>{{ p.product.title }}</td>
+                    <td>${{ p.product.precio | floatformat:2 | intcomma }}</td>
+                    <td>
+                        <p class="carshop__count">
+                            {{ p.count }}
+                        </p>
+                    </td>
+                        {% if p.instalacion == True %}
+                            {% if p.user.estado == 'Sonora' %}
+                                <td><p class="carshop__instalation">${{p.product.precio_inst | floatformat:2 | intcomma}}</p></td>
+                            {% else %}
+                                <td><p class="carshop__instalation">${{p.product.precio_inst_fuera | floatformat:2 | intcomma}}</p></td>
+                            {% endif %}
+                        {% else %}
+                            <td><p class="carshop__instalation">No solicitada</p></td>
+                        {% endif %}
+                    <td>${{ p.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="payment__paypal">
+            <p class="carshop__text_total total--paypal">Total: ${{ order | floatformat:2 | intcomma }}</p>
+            <div id="paymentInfo">
+                <div>
+                    <div id="paypal-button-container"></div>
+                </div>
+            </div>
+        </div>
+</div>
+<div id="loader" class="container__spiner">
+    <div>
+        <h2>Procesando pago</h2>
+        <div class="spiner_two"></div>
+    </div>
+</div>
+{% endif %}
+
+        
+
+
+
+{% include 'includes/footer.html' %}
+{% endblock content %}
+
+
+{% block script %}
+    <script src="https://www.paypal.com/sdk/js?client-id={{PAYPAL_CLIENT_ID}}&currency=MXN"></script>
+    <script>
+        const loader = document.getElementById('loader');
+        const contenido = document.getElementById('contenido');
+        
+        function toggleLoader(on){
+            loader.style.display = on === true ? "block" : "none";
+            contenido.style.display = on === true ? "none" : "block";
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        function sendOrderConfirmed(orderData) {
+            return fetch("/confirm-order/", {
+                method: "post",
+                body: JSON.stringify(orderData),
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken
+                }
+            });
+        }
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{order|escapejs}}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    sendOrderConfirmed(orderData).then(res => {
+                        toggleLoader(true)
+                        setTimeout(function(){
+                            window.location.replace("{{ CALLBACK_URL }}")
+                        }, 5000);
+                    })
+                    // Successful capture! For dev/demo purposes:
+                    
+                });
+            },
+
+        }).render('#paypal-button-container');
+    </script>
+{% endblock script %}
+

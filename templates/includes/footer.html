@@ -1,0 +1,37 @@
+{% load static %}
+<footer class="footer">
+    <div class="footer__container">
+        
+        {% if user.is_authenticated %}
+        <a class="footer__link_login" href="{% url 'user_app:perfil_usuario' %}">
+            Mi perfil
+        </a>
+        {% else %}
+        <a class="footer__link_login" href="{% url 'user_app:login' %}">
+            Iniciar sesión
+        </a>
+        {% endif %} 
+        <a class="footer__link_about" href="{% url 'store_app:about_exo' %}">
+            Sobre nosotros
+        </a>
+    </div>
+
+    <div class="footer__container">
+        <h2 class="footer__text">Nuestras redes sociales:</h2>
+            <a class="footer__link2" href="">
+                <img class="picture__fb" src="{% static 'img/facebook.png' %}" alt="">
+            </a>
+            <a class="footer__link2" href="">
+                <img class="picture__whats" src="{% static 'img/whatsapp.png' %}" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="footer__container footer__container--envios">
+        <h2 class="footer__text">Envios por:</h2>
+            <img class="picture__estafeta" src="{% static 'img/estafeta.png' %}" alt="">
+            <br>
+            <img class="picture__dhl" src="{% static 'img/dhl.png' %}" alt="">
+        </div>
+    </div>
+</footer>

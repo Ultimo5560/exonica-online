@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+
+{% if aboutExo %}
+<div class="listas_admin">
+    <h1 class="listas__title">
+        Sobre nosotros
+    </h1>
+    <table class="listas_admin__table carshop__table">
+        <thead class="listas_admin__seldas">
+            <tr>
+                <th class="listas_admin__content">Información</th>
+            </tr>
+        </thead>
+        <tbody class="listas_admin__seldas">
+            {% for ac in aboutExo %}
+            <tr>
+                <td class="listas_admin__content">{{ac.qsomos}}</td>
+                <td class="listas_admin__content">
+                    <a href="{% url 'app_admin:editar_about_exo' ac.id %}" class="listas__edt_btn">
+                        Editar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% include 'includes/footer.html' %}
+{% endblock content %}

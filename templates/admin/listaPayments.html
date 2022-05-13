@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+
+<div class="compras compras--admin">
+    <div class="categorias__listas">
+        <ul class="categorias__lista">
+            <li>
+                <a href="?categoria={{categoria.all}}" class="categorias__link_all categorias__link--payment">Ultimas 15 compras</a>
+            </li>
+            <li>
+                <a href="?categoria=VERIFICANDO DATOS"  class="categorias__link categorias__link--payment">VERIFICANDO DATOS</a>
+            </li>
+            <li>
+                <a href="?categoria=EN PROCESO DE ENVIO"  class="categorias__link categorias__link--payment">EN PROCESO DE ENVIO</a>
+            </li>
+            <li>
+                <a href="?categoria=EN CAMINO"  class="categorias__link categorias__link--payment">EN CAMINO</a>
+            </li>
+            <li>
+                <a href="?categoria=ENTREGADO"  class="categorias__link categorias__link--payment">ENTREGADO</a>
+            </li>
+        </ul>
+    </div>
+
+    {% if payment %}
+    {% for p in payment %}
+        <div class="compras__container compras__container--admin">
+            <table class="compras__table">
+                <thead>
+                    <tr class="compras__head">
+                        <td>No. Orden: {{p.id}}</td>
+                        <td>Usuario</td>
+                        <td>Dirección de envío</td>
+                        <td>Datos de contacto</td>
+                        <td>Metodo de pago</td>
+                        <td>Fecha de compra</td>
+                        {% if p.payment_method == "Transferencia" %}
+                            <td>Comprobante de pago</td>
+                        {% endif %}
+                        <td>Total</td>
+                        <td><a href="{% url 'app_admin:editar_payment' p.id %}" class="btn__status">ESTATUS</button></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="compras__body">
+                        <td></td>
+                        <td>{{p.user.nombre}}</td>
+                        <td>
+                            Ciudad: {{p.user.ciudad}}<br>
+                            Estado: {{p.user.estado}}<br>
+                            Dirección: {{p.user.direccion_envio}}
+                        </td>
+                        <td>
+                            Cel.: {{p.user.celular}} <br>
+                            Email: {{p.user.email}}
+                        </td>
+                        <td>{{p.payment_method}}</td>
+                        <td>{{p.timestamp.date}}</td>
+                        {% if p.payment_method == "Transferencia" %}
+                            <td>
+                                <div uk-lightbox>
+                                    <a class="uk-button uk-button-default" href="{{p.comprobante_pago.url}}" data-caption="Comprobante de pago">
+                                        Abrir
+                                    </a>
+                                </div>
+                            </td>
+                        {% endif %}
+                        <td>${{p.amount}}</td>
+                        <td>{{p.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="compras__articulos">
+                <thead>
+                    <tr class="compras__head">
+                        <td>Producto</td>
+                        <td>Cantidad</td>
+                        <td>Precio</td>
+                        <td>Instalación</td>
+                        <td>Subtotal</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in p.detail_payment.all %}
+                    <tr>
+                        <td>{{detalle.product}}</td>
+                        <td>{{detalle.count}}</td>
+                        <td>${{detalle.price_sale}}</td>
+                        {% if detalle.instalacion == False %}
+                        <td>No solicitada</td>
+                        {% else %}
+                        <td>${{detalle.costo_instalacion}}</td>
+                        {% endif %}
+                        <td>${{detalle.subtotal}}</td>
+                    </tr>
+                    {% endfor %}
+                <tbody>
+            </table>
+            {% if p.status == 'ENTREGADO' %}
+                <a href="{% url 'app_admin:delete_payment' p.id %}" class="section_new__link section_new__link--opacity contact__btn" type="button">Limpiar compra</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% else %}
+        <h1 class="compras__no">No hay compras</h1>
+    {% endif %}
+</div>
+{% include 'includes/footer.html' %}
+{% endblock content %}

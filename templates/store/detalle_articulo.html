@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{articulos.title}} 
+{% endblock title %}
+{% block description %} 
+    <meta name="description" content="{{articulos.descripcion}}">
+{% endblock description %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+
+<section class="detail">
+    <div class="detail__imagen">
+        <picture class="detail__picture">
+            <img src="{{ articulos.imagen.url }}" alt="{{articulos.title}}" class="detail__img">
+        </picture>
+    </div>
+    <div class="detail__datos">
+        <h1 class="detail__title">
+            {{articulos.title}}
+        </h1>
+        <h3 class="detail__exo">
+            {{articulos.categoria}}
+        </h3>
+        <p class="detail__articulo">
+            {{articulos.descripcion}}
+        </p>
+        <h2 class="detail__sale">
+            ${{articulos.precio}}
+        </h2>
+        <form action="{% url 'store_app:add_car_shop' articulos.id %}" method="POST" class="detail__form">{% csrf_token %}
+            {% if user.estado == 'Sonora' %}
+            <p>
+                <input type="checkbox" name="instalacion" class="detail__check" id="id_instalacion">
+                <label for="id_instalacion">Deseo contratar la instalación (+${{articulos.precio_inst}})</label>
+            </p>
+            {% else %}
+            <p>
+                <input type="checkbox" name="instalacion" class="detail__check" id="id_instalacion">
+                <label for="id_instalacion">Deseo contratar la instalación (+${{articulos.precio_inst_fuera}})</label>
+            </p>
+            {% endif %}
+            <div class="detail__div_sub">
+                <p class="detail__cantidad">Cantidad:</p>
+                <input type="number" name="count" value="1" class="form__one" min="1" required id="id_count">
+                <button type="submit" class="section_new__link section_new__link--opacity section_new__link--modifer">Agregar al carrito</button>
+            </div>
+            
+        </form>
+    </div>
+</section>
+            
+{% include 'includes/footer.html' %}
+{% endblock content %}

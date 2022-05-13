@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+
+<div class="listas_admin">
+    <a class="listas_admin__btn_add" href="{% url 'app_admin:articulos_crear' %}">
+        Agregar Producto
+    </a>
+    <table class="carshop__table listas_admin__table listas_admin__table--articulos">
+        <thead class="listas_admin__seldas">
+            <tr class="tr__stiles">
+                <th class="listas_admin__content content--head">Agregado por</th>
+                <th class="listas_admin__content content--head">Imagen</th>
+                <th class="listas_admin__content content--head">Producto</th>
+                <th class="listas_admin__content content--head">Precio</th>
+                <th class="listas_admin__content content--head">Instalacion Sonora</th>
+                <th class="listas_admin__content content--head">Instalación fuera</th>
+                <th class="listas_admin__content content--head">Categoria</th>
+                <th class="listas_admin__content content--head">Descripción</th>
+                <th class="listas_admin__content content--head">Acción</th>
+            </tr>
+        </thead>
+        <tbody class="listas_admin__seldas">
+            {% for a in listararticulos %}
+                <tr>
+                    <td class="listas_admin__content">{{a.user}}</td>
+                    <td class="listas_admin__content"><img width="60" height="60" src="{{ a.imagen.url }}"></td>
+                    <td class="listas_admin__content">{{a.title}}</td>
+                    <td class="listas_admin__content">${{a.precio}}</td>
+                    <td class="listas_admin__content">${{a.precio_inst}}</td>
+                    <td class="listas_admin__content">${{a.precio_inst_fuera}}</td>
+                    <td class="listas_admin__content">{{a.categoria}}</td>
+                    <td class="listas_admin__content">{{a.descripcion | safe}}</td>
+                    <td class="listas_admin__content">
+                        <a class="listas__edt_btn btn-art" href="{% url 'app_admin:articulo_editar' a.id %}">
+                            Editar
+                        </a>
+                        <a class="listas__delete_btn btn-art" href="{% url 'app_admin:articulo_eliminar' a.id %}">
+                            Eliminar
+                        </a> 
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="paginated__admin">
+    {% if is_paginated %}
+    <ul>
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{page_obj.previous_page_number}}">
+                    <img class="pagination__arrow" src="{% static 'img/arrow-left.svg' %}"> 
+                    Atras
+                </a>
+            </li>
+        {% endif %}
+        
+        {% for pagina in paginator.page_range %}
+            
+        {% ifequal pagina page_obj.number %} 
+        <li class="pagination-active"><span>{{pagina}}</span></li>
+        {% else %}
+        <li><a href="?page={{pagina}}" class="pagination-normal">{{ pagina }}</a></li>
+        {% endifequal %}
+
+        {% endfor %}
+            
+        {% if page_obj.has_next %}
+        <li>
+            <a href="?page={{page_obj.next_page_number}}">
+                Siguiente 
+                <img class="pagination__arrow" src="{% static 'img/arrow-right.svg' %}">
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+</div>
+</div>
+{% include 'includes/footer.html' %}
+{% endblock content %}

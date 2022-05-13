@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Exonica_online {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="perfil__editar">
+    <picture class="editar__img">
+        <img src="{% static 'img/editar_img.svg' %}" class="editar__image">
+    </picture>
+    <h1>Editar mi perfil</h1>
+    <form class="editar__form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="editar__container_one">   
+            <label for="id_nombre">Nombre:</label>
+            {{ form.nombre }}
+            <label for="id_apellidos">Apellidos:</label>
+            {{ form.apellidos }}
+            <label for="id_fecha_nacimiento">Fecha de nacimiento:</label>
+            {{ form.fecha_nacimiento }}
+            <label for="id_email">Email:</label>
+            {{ form.email }} 
+            <label for="id_celular">Celular:</label>
+            {{ form.celular }} 
+        </div>
+        <div class="editar__container_two">
+            <label for="id_genero">Genero:</label>
+            {{ form.genero }} 
+            <label for="id_ciudad">Ciudad:</label>
+            {{ form.ciudad }} 
+            <label for="id_estado">Estado:</label>
+            {{ form.estado }} 
+            <label for="id_direccion_envio">Dirección de envío:</label>
+            {{ form.direccion_envio }} 
+            <label for="id_cpostal">Codigo Postal:</label>
+            {{ form.cpostal }} 
+        </div>
+        <button class="perfil__btn" type="submit">Modificar</button>
+    </form>
+</div>
+    
+{% include 'includes/footer.html' %}
+{% endblock content %}

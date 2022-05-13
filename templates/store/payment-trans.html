@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="carshop carshop--transfer">
+    <div class="payment__transfer-steps">
+        <ul class="payment__transfer-text">
+            <li>Deposita o transfiere la cantidad de ${{order | floatformat:2 | intcomma }} al siguiente número de cuenta Bancomer: ###  a nombre de:  ******</li>
+            <li>Toma una foto o captura de pantalla</li>
+            <li>Da click en Seleccionar archivo y selecciona la imagen</li>
+            <li>Da click en Comprar. Despues de verificar los datos prepararemos el envío a la dirección de tu perfil</li>
+        </ul>
+    </div>
+    <p>Total: ${{order | floatformat:2 | intcomma }}</p>
+    <form class="payment__form-transfer" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <label for="id_comprobante_pago">Comprobante de pago:</label>
+        <input  type="file" name="comprobante_pago" accept="image/*" required id="id_comprobante_pago">
+        <button type="submit" class="section_new__link section_new__link--opacity contact__payment">Comprar</button>
+    </form>
+    {% if productos %}
+        <table class="carshop__table table--payment">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Instalación</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for p in productos %}
+                <tr>
+                    <td><img src="{{ p.product.imagen.url }}" style="height: 50px;"> </td>
+                    <td>{{ p.product.title }}</td>
+                    <td>${{ p.product.precio | floatformat:2 | intcomma }}</td>
+                    <td>
+                        {{ p.count }}
+                    </td>
+
+                    {% if p.instalacion == True %}
+                        {% if p.user.estado == 'Sonora' %}
+                            <td><p class="carshop__instalation">${{p.product.precio_inst | floatformat:2 | intcomma}}</p></td>
+                        {% else %}
+                            <td><p class="carshop__instalation">${{p.product.precio_inst_fuera | floatformat:2 | intcomma}}</p></td>
+                        {% endif %}
+                    {% else %}
+                        <td><p class="carshop__instalation">No solicitada</p></td>
+                    {% endif %}
+
+                    <td>${{ p.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+        
+
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

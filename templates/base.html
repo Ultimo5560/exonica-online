@@ -1,0 +1,30 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/exo-estilos.css' %}">
+    <title>{% block title %} {% endblock title %}</title>
+    <script type="text/javascript" src="{% static 'vue/vue.js' %}"></script>
+    {% block description %} {% endblock description %}
+    {% block tags %} {% endblock tags %}
+</head>
+<body>
+    {% block content %}
+
+    {% endblock content %}
+    
+    {% block js %}
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'vue/axios.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'vue/appsvue/procesos.js' %}"></script>
+    {% endblock js %}
+
+    {% block script %}
+    {% endblock script %}
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+
+<div class="contact crear--categoria">
+    <form method="post" class="contact__form"> {% csrf_token %}
+        <h1>Agregar categoria</h1>
+        {{form.as_p}}
+        <button class="section_new__link section_new__link--opacity contact__btn" type="submit">Agregar</button>    
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

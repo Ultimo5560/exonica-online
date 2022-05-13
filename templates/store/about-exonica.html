@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} Exonica_online {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<section class="about">
+    <h2>SOBRE NOSOTROS</h2>
+    <div class="about__container">
+        <p>
+            {% for ab in aboutExo %}
+            {{ ab.qsomos }}
+            {% endfor %}
+        </p>
+        
+    </div>
+    <section class="about__image">
+    </section>
+</section>
+
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

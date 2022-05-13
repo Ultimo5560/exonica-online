@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} Exonica_online {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="perfil">
+    <picture class="perfil__avatar">
+        <h1>Mi perfil</h1>
+        {% if user.genero == 'Masculino' %}
+        <img src="{% static 'img/male_avatar.svg' %}" class="perfil__img">
+        {% else %}
+        <img src="{% static 'img/female_avatar.svg' %}" class="perfil__img">
+        {% endif %}
+    </picture>
+    <a href="{% url 'user_app:editar_perfil_usuario' %}" class="perfil__edit">Editar datos de mi perfil</a>
+    <div class="perfil__container_one">   
+        <div class="perfil__datos_one">
+            <h3>Nombre</h3>
+            <p>{{miPerfil.nombre}}</p>
+        </div>
+        <div class="perfil__datos_one">
+            <h3>Apellidos</h3>
+            <p>{{miPerfil.apellidos}}</p>
+        </div>
+        <div class="perfil__datos_one">
+            <h3>Fecha de nacimiento</h3>
+            <p>{{miPerfil.fecha_nacimiento}}</p>
+        </div>
+        <div class="perfil__datos_one">
+            <h3>Email</h3>
+            <p>{{miPerfil.email}}</p>
+        </div>
+        <div class="perfil__datos_one">
+            <h3>Celular</h3>
+            <p>{{miPerfil.celular}}</p>
+        </div>
+    </div>
+    <div class="perfil__container_two">
+        <div class="perfil__datos_two">
+            <h3>Genero</h3>
+            <p>{{miPerfil.genero}}</p>
+        </div>
+        <div class="perfil__datos_two">
+            <h3>Ciudad</h3>
+            <p>{{miPerfil.ciudad}}</p>
+        </div>
+        <div class="perfil__datos_two">
+            <h3>Estado</h3>
+            <p>{{miPerfil.estado}}</p>
+        </div>
+        <div class="perfil__datos_two">
+            <h3>Dirección de envío</h3>
+            <p>{{miPerfil.direccion_envio}}</p>
+        </div>
+        <div class="perfil__datos_two">
+            <h3>Codigo Postal</h3>
+            <p>{{miPerfil.cpostal}}</p>
+        </div>
+    </div>
+</div>
+
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} Exonica_online {% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="categorias">
+    <div class="categorias__listas">
+        <ul class="categorias__lista">
+            <li>
+                <a href="?categoria={{categoria.all}}" class="categorias__link_all">Todas las categorias</a>
+            </li>
+            {% for categoria in categorias %}
+            <li>
+                <a href="?categoria={{categoria.short_name}}" class="categorias__link">{{categoria.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <form class="categorias__form" method="GET">{% csrf_token %}
+        <input class="categorias__input" type="text" id="kword" name="kword" placeholder="Buscar producto">
+        <button class="categorias__btn" type="submit"> Buscar</button>
+    </form>
+    <div class="categorias__product">
+        <section class="section section__categorias">
+            <div class="section__container section__container--categorias">
+                {% for art in articulos %}
+                <div class="section__card section__card--categorias">
+                    <div class="section__text">
+                        <h1 class="section__card_text">{{art.title | truncatechars:21}}</h1>
+                        <p class="section__price">${{art.precio|intcomma}}</p>
+                    </div>
+                    <picture>
+                        <img src="{{ art.imagen.url }}" class="image">
+                    </picture>
+                    <a href="{% url 'store_app:articulo_pub' art.slug %}" class="section__link">Ver</a>
+                </div>
+                {% empty %}
+                <div class="uk-padding-small">
+                    <h1 class="uk-heading-medium">No hay resultados</h1>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="uk-container">
+                
+            {% if is_paginated %}
+            <ul class="uk-pagination uk-flex-center" uk-margin>
+                    
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{page_obj.previous_page_number}}"><span class="uk-margin-small-right" uk-pagination-previous></span> Atras</a></li>
+                {% endif %}
+                    
+                {% for pagina in paginator.page_range %}
+                        
+                {% ifequal pagina page_obj.number %} 
+                <li class="uk-active"><span>{{pagina}}</span></li>
+                {% else %}
+                <li class="uk-flex-center"><a href="?page={{pagina}}">{{ pagina }}</a></li>
+                {% endifequal %}
+        
+                {% endfor %}
+                        
+                {% if page_obj.has_next %}
+                <li><a href="?page={{page_obj.next_page_number}}">Siguiente <span class="uk-margin-small-left" uk-pagination-next></span></a></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

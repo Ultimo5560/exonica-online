@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}  {% endblock title %}
+{% block content %}
+{% include 'includes/admin_lateral.html' %}
+
+<div class="uk-modal-body" style="height: 100vh">
+    <form method="post"> {% csrf_token %}
+        {{form.as_p}}
+        <div class="uk-text-right">
+            <button class="uk-button uk-button-primary" type="submit">Guardar</button>
+        </div>
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}
+{% endblock content %}

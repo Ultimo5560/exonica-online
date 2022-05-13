@@ -1,0 +1,79 @@
+{% load static %}
+
+    {% if user.is_authenticated %}
+    <div class="nav__items container__admin">
+        <ul class="list">
+
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/store.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'store_app:pub_articulos' %}" class="nav__link">Inicio</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/info-circle.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:about_exo' %}" class="nav__link">Información</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/category-alt.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:categoria_listar' %}" class="nav__link">Categorias</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/user-check.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'user_app:userList' %}" class="nav__link">Usuarios</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/cart.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:articulos_listar' %}" class="nav__link">Articulos</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/rectangle.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:anuncios_listar' %}" class="nav__link">Anuncios</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/chat.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:mensajes_listar' %}" class="nav__link">
+                        Mensajes
+                        {% if msjnoread %}
+                            ({{msjnoread}}) 
+                        {% endif %}
+                    </a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/heart.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'app_admin:payments_listar' %}" class="nav__link">
+                        Ventas
+                        {% if comprasnum %}
+                            ({{comprasnum}}) 
+                        {% endif %}
+                    </a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/user-adm.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'user_app:perfil_usuario' %}" class="nav__link nav__link_admin">Perfil de usuario</a>
+                </div>
+            </li>
+            <li class="list__item backhover">
+                <div class="list__button">
+                    <img src="{% static 'img/log-out.svg' %}" class="list__img icon_adm">
+                    <a href="{% url 'user_app:logout' %}" class="nav__link">Cerrar sesión</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
