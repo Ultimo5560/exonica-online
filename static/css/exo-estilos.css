@@ -41,7 +41,7 @@ body{
 .nav{
     display: flex;
     font-size: 13px;
-    background: #f8f8f8;
+    background: #6d3030;
     height: var(--height-nav);
     text-transform: uppercase;
     position: fixed;
@@ -94,7 +94,7 @@ body{
 .nav__astyle{
     display: inline-flex;
     align-items: center;
-    color: #999;
+    color: #fff;
     text-decoration: none;
     line-height: 70px;
     margin-left: 3.1rem;
@@ -115,7 +115,7 @@ body{
 }
 
 .nav__astyle:hover{
-    color: #292929;
+    color: #a07686;
     border: 2px white;
 
 }
@@ -133,7 +133,7 @@ body{
 }
 
 .nav__astyle:hover > .nav__img3{
-    background-image: url(../img/support.png);
+    background-image: url(../img/support-bold.png);
 }
 
 .nav__astyle2{
@@ -189,7 +189,7 @@ body{
     flex-direction: column;
     justify-content:center;
     border-radius: 0 0 0 0;
-    background: #fff;
+    background: rgb(219, 200, 200);
     transform: translate(-100%);
     transition: .4s;
 }
@@ -268,7 +268,7 @@ body{
     width: 25px;
     margin-left: -12px;
     border-radius: 100%;
-    background: rgba(90, 13, 26, 0.897);
+    background: rgba(156, 83, 95, 0.582);
     font-size: 1rem;
 }
 
@@ -277,7 +277,7 @@ body{
 .slider{
     top: var(--height-nav);
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     overflow: hidden;
 }
 
@@ -288,7 +288,7 @@ body{
 
 .slider__contenido{
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -297,23 +297,23 @@ body{
 
 
 .slider__contenido > img{
-    height: 100%;
+    height: 77%;
     width: 100%;
     object-fit: cover;
 }
 
 .slider__contenido > div{
     width: 100%;
-    height: 120px;
-    margin-bottom: 0;
+    height: 100px;
+    margin-bottom: 71px;
     position: absolute;
     align-self: end;
-    background: #161616;
-    opacity: .9;
+    background: #291414;
+    opacity: .8;
 }
 
 .slider__contenido h1{
-    margin-top: 15px;
+    margin-top: 5px;
     font-weight: 700;
     font-size: 1.5rem;
     color: #F6F8FA;
@@ -342,8 +342,7 @@ body{
 .Carousel h2{
     font-size: 26px;
     line-height: 38px;
-    padding-bottom: 10px;
-    margin-top: 40px;
+    margin-top: 30px;
     opacity: .9;
     text-transform: uppercase;
     letter-spacing: 10px;
@@ -1040,21 +1039,22 @@ body{
     text-decoration: none;
     background: indigo;
     color: #fff;
-    height: 50px;
+    height: 70px;
     width: 300px;
     text-align: center;
     padding-top: 15px;
     border-radius: 15px;
     transition: .3s;
+    opacity: .7;
 }
 
 .payments__link--trans:hover{
     opacity: .7;
 }
 
-.payments__link--card:hover{
+/**.payments__link--card:hover{
     opacity: .7;
-}
+}**/
 
 .payments__title{
     grid-row: 1/2;
@@ -1252,7 +1252,7 @@ body{
 
 .footer{
     margin-bottom: 0;
-    background-color: #6b5d6b;
+    background-color: #3d1c1c;
     display: flex;
     width: 100%;
     height: 300px;
@@ -1576,7 +1576,7 @@ body{
     left: 15px;
     padding: 0 4px;
     pointer-events: none;
-    transition: .5s transform, color .5s, background .5s, left .9s;
+    transition: .5s transform, color .5s, .5s, left .9s;
 }
 
 .register_link{
@@ -2249,7 +2249,7 @@ body{
         display: flex;
     }
     .slider__contenido > img{
-        height: 100%;
+        height: 70%;
         width: 100%;
         object-fit: cover;
     }
@@ -2405,7 +2405,7 @@ body{
         display: flex;
     }
     .slider__contenido > img{
-        height: 100%;
+        height: 70%;
         width: 100%;
         object-fit: cover;
     }
@@ -2565,7 +2565,7 @@ body{
     }
     /* slider portada */
     .slider__contenido > img{
-        height: 72%;
+        height: 70%;
         width: 99%;
     }
     /* cards */
