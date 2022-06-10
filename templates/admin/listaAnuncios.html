@@ -48,11 +48,11 @@
         
         {% for pagina in paginator.page_range %}
             
-        {% ifequal pagina page_obj.number %} 
+        {% if pagina == page_obj.number %} 
         <li class="pagination-active"><span>{{pagina}}</span></li>
         {% else %}
         <li><a href="?page={{pagina}}" class="pagination-normal">{{ pagina }}</a></li>
-        {% endifequal %}
+        {% endif %}
 
         {% endfor %}
             
