@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}  {% endblock title %}
+{% block title %} Exonica Soluciones en Tecnología {% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
 
@@ -95,34 +95,41 @@
                     <p>Hacer deposito o transferencia</p>
                 </a>
                 <img class="carshop__img_card" src="{% static 'img/payments-card.svg' %}" alt="">
-                <a class="payments__link--card" href="#">
-                    <p>Pagar con tarjeta<br>(Opcion no disponible)</p>
+                <a class="payments__link--card" href="{% url 'store_app:payment_paypal' %}">
+                    <p>Pagar con tarjeta</p>
                 </a>
         </div>
     </div>
 
         
-    <div class="uk-container">
-            
+    <div class="paginated__admin">
         {% if is_paginated %}
-        <ul class="uk-pagination uk-flex-center" uk-margin>
-            
+        <ul>
             {% if page_obj.has_previous %}
-                <li><a href="?page={{page_obj.previous_page_number}}"><span class="uk-margin-small-right" uk-pagination-previous></span> Atras</a></li>
+                <li><a href="?page={{page_obj.previous_page_number}}">
+                        <img class="pagination__arrow" src="{% static 'img/arrow-left.svg' %}"> 
+                        Atras
+                    </a>
+                </li>
             {% endif %}
             
             {% for pagina in paginator.page_range %}
                 
-                {% if pagina == page_obj.number %} 
-                <li class="uk-active"><span>{{pagina}}</span></li>
-                {% else %}
-                <li class="uk-flex-center"><a href="?page={{pagina}}">{{ pagina }}</a></li>
-                {% endif %}
-
+            {% if pagina == page_obj.number %} 
+            <li class="pagination-active"><span>{{pagina}}</span></li>
+            {% else %}
+            <li><a href="?page={{pagina}}" class="pagination-normal">{{ pagina }}</a></li>
+            {% endif %}
+    
             {% endfor %}
                 
             {% if page_obj.has_next %}
-            <li><a href="?page={{page_obj.next_page_number}}">Siguiente <span class="uk-margin-small-left" uk-pagination-next></span></a></li>
+            <li>
+                <a href="?page={{page_obj.next_page_number}}">
+                    Siguiente 
+                    <img class="pagination__arrow" src="{% static 'img/arrow-right.svg' %}">
+                </a>
+            </li>
             {% endif %}
         </ul>
         {% endif %}

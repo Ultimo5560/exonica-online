@@ -6,26 +6,25 @@
                 <img src="{% static 'img/exologow.png' %}" class="nav__logo_img" alt="">
             </figure>
             <div id="num_car" class="nav__links">
-                <a class="nav__astyle nav__astyle_header" href="{% url 'store_app:pub_articulos' %}">
+                <a class="nav__astyle nav__astyle_header {% if request.resolver_match.url_name == 'pub_articulos' %}active{% endif %}" href="{% url 'store_app:pub_articulos' %}">
                     <img class="nav__img" src="{% static 'img/home.png' %}"> 
                     <p>INICIO</p>
                 </a>
-                <a class="nav__astyle nav__astyle_header" href="{% url 'store_app:articulo_categoria' %}"><img class="nav__img1" src="{% static 'img/category.png' %}"> <p>CATEGORIAS</p></a>
+                <a class="nav__astyle nav__astyle_header {% if request.resolver_match.url_name == 'articulo_categoria' %}active{% endif %}" href="{% url 'store_app:articulo_categoria' %}"><img class="nav__img1" src="{% static 'img/category.png' %}"> <p>CATEGORIAS</p></a>
                 
                 {% if request.resolver_match.url_name == 'pub_articulos' %}
                 <a class="nav__astyle nav__astyle_header" href="#aboutus"><img class="nav__img2" src="{% static 'img/store.png' %}"> <p>SOBRE NOSOTROS</p></a>
                 {% else %}
-                <a class="nav__astyle nav__astyle_header" href="{% url 'store_app:about_exo' %}"><img class="nav__img2" src="{% static 'img/store.png' %}"> <p>SOBRE NOSOTROS</p></a>
+                <a class="nav__astyle nav__astyle_header {% if request.resolver_match.url_name == 'about_exo' %}active{% endif %}" href="{% url 'store_app:about_exo' %}"><img class="nav__img2" src="{% static 'img/store.png' %}"> <p>SOBRE NOSOTROS</p></a>
                 {% endif %}
                 
-                <a class="nav__astyle nav__astyle_header" href="{% url 'store_app:inform_contact' %}"><img class="nav__img3" src="{% static 'img/support.png' %}"> <p>Contactanos</p></a>
-                <a class="nav__astyle nav__astyle_cart" href="{% url 'store_app:car_shop' %}"><img class="nav__img4 nav__picture" src="{% static 'img/cart.png' %}"><h5 class="nav__num" v-show="lista_prod">{$ lista_prod.total $}</h5></a>
+                <a class="nav__astyle nav__astyle_header {% if request.resolver_match.url_name == 'inform_contact' %}active{% endif %}" href="{% url 'store_app:inform_contact' %}"><img class="nav__img3" src="{% static 'img/support.png' %}"> <p>Contactanos</p></a>
+                <a class="nav__astyle nav__astyle_cart" href="{% url 'store_app:car_shop' %}"><img class="nav__img4 nav__picture" src="{% static 'img/cart.png' %}"><h5 class="nav__num" v-show="nc">{$ nc.total $}</h5></a>
             </div>
         </section>
 
         <section class="nav__container_rigth container">
             <label for="check" class="nav__astyle2"></label>
-            <input type="checkbox" id="check" class="nav__checbox">
             <div class="nav__items">
                 <ul class="list">
                     <li class="list__item">
@@ -36,7 +35,7 @@
                     </li>
                     <li class="list__item list__item--click list__item_lateral">
                         <div class="list__button list__button--click">
-                            <img src="{% static 'img/store.png' %}" class="list__img">
+                            <img src="{% static 'img/store_left.png' %}" class="list__img">
                             <a href="#" class="nav__link">Tienda</a>
                             <img src="{% static 'img/arrow.svg' %}" class="list__arrow">
                         </div>
@@ -87,7 +86,7 @@
                     <li class="list__item list__item--click">
                         <div class="list__button list__button--click">
                             <img src="{% static 'img/user-circle.png' %}" class="list__img">
-                            <a href="#" class="nav__link">Perfil de usuario</a>
+                            <a href="#" class="nav__link">Mi perfil</a>
                             <img src="{% static 'img/arrow.svg' %}" class="list__arrow">
                         </div>
                         <ul class="list__show">

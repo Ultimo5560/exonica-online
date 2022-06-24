@@ -1,50 +1,4 @@
-let listElements = document.querySelectorAll('.list__button--click');
-
-listElements.forEach(listElement => {
-    listElement.addEventListener('click', ()=>{
-        
-        listElement.classList.toggle('arrow');
-
-        let height = 0;
-        let menu = listElement.nextElementSibling;
-        if(menu.clientHeight == "0"){
-            height=menu.scrollHeight;
-        }
-
-        menu.style.height = `${height}px`;
-
-    })
-});
-
-let slider = document.querySelector(".slider__contenedor")
-let sliderIndividual = document.querySelectorAll(".slider__contenido")
-let contador = 1;
-let width = sliderIndividual[0].clientWidth;
-let intervalo = 6000;
-
-window.addEventListener("resize", function(){
-    width = sliderIndividual[0].clientWidth;
-})
-
-setInterval(function(){
-    slides();
-},intervalo);
-
-function slides(){
-    slider.style.transform = "translate("+(-width*contador)+"px)";
-    slider.style.transition = "transform .8s";
-    contador++;
-
-    if(contador == sliderIndividual.length){
-        setTimeout(function(){
-            slider.style.transform = "translate(0px)";
-            slider.style.transition = "transform .7s";
-            contador=1;
-        },6000)
-    }
-}
-
-
+// silder 'lo nuevo'
 function App() {}
 
 window.onload = function (event) {
@@ -57,9 +11,7 @@ App.prototype.processingButton = function(event) {
     const slickList = event.currentTarget.parentNode;
     const track = event.currentTarget.parentNode.querySelector('#track');
     const slick = track.querySelectorAll('.slick');
-
     const slickWidth = slick[0].offsetWidth;
-    
     const trackWidth = track.offsetWidth;
     const listWidth = slickList.offsetWidth;
 
@@ -80,3 +32,39 @@ let nextAction = (leftPosition,trackWidth,listWidth,slickWidth,track) => {
         track.style.left = `${-1 * (leftPosition + slickWidth)}px`;
     }
 }
+
+
+// menu desplegable
+const menuBoton = document.querySelector('.nav__astyle2');
+const menuDespl = document.querySelector('.nav__items');
+const despl =  document.querySelectorAll('.list__button--click')
+const listArrow = document.querySelectorAll('.list__item')
+
+document.addEventListener('click', (event) =>{
+    if (event.path[0] == menuBoton || menuDespl in [event.path]) {
+        menuDespl.classList.toggle('open')
+    } else if (event.path[1].classList[0] === despl[1].classList[0] || event.path[1].classList[0] === listArrow[1].classList[0]) {
+        // no hace nada
+    } else {
+        menuDespl.classList.remove('open')
+    }
+});
+
+
+// menu desplegable flechas
+let listElements = document.querySelectorAll('.list__button--click');
+listElements.forEach(listElement => {
+    listElement.addEventListener('click', ()=>{
+        
+        listElement.classList.toggle('arrow');
+
+        let height = 0;
+        let menu = listElement.nextElementSibling;
+        if(menu.clientHeight == "0"){
+            height=menu.scrollHeight;
+        }
+
+        menu.style.height = `${height}px`;
+
+    })
+});

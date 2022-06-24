@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Exonica_online {% endblock title %}
+{% block title %} Exonica Soluciones en Tecnología {% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
 
 {% if dataOrder %}
+<div id="loader" class="container__spiner">
+    <div>
+        <h2>Finalizando compra</h2>
+        <div class="spiner_one"></div>
+    </div>
+</div>
 <div class="thanks">
     <h1 class="thanks__text">¡Gracias por tu compra!</h1>
 
@@ -70,10 +76,17 @@
 <div class="no-thanks">
     <div class="no-thanks__div">
         <h1 class="no-thanks__title">Aun no tienes compras</h1>
-        <span uk-icon="icon: close; ratio: 3.5"></span>
     </div>
 </div>
 {% endif %}
 
 {% include 'includes/footer.html' %}
 {% endblock content %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vue/vue.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vue/axios.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vue/appsvue/procesos.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/paymentsTransLoad.js' %}"></script>
+{% endblock script %}

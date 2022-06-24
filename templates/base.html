@@ -15,15 +15,16 @@
 
     {% endblock content %}
     
+    
+
+    {% block script %}
     {% block js %}
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
         <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
         <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
         <script type="text/javascript" src="{% static 'vue/axios.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'vue/appsvue/procesos.js' %}"></script>
     {% endblock js %}
-
-    {% block script %}
     {% endblock script %}
 
 </body>

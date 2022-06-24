@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
- Exonica. Soluciones en Tecnología
+ Exonica Soluciones en Tecnología
 {% endblock title %}
 
 {% block description %} 
@@ -47,7 +47,7 @@
             {% for r in articulos_recientes %}
             <div class="slick">
                 <picture>
-                    <img src="{{ r.imagen.url }}" class="image__new">
+                    <img src="{{ r.imagen.url }}" class="image__new" alt="{{r.title}}">
                 </picture>
                 <div class="section_new__text">
                     <h1 class="section_new__card_text">{{r.title}}</h1>
@@ -73,7 +73,7 @@
                 <p class="section__price">${{art.precio|intcomma}}</p>
             </div>
             <picture>
-                <img src="{{ art.imagen.url }}" class="image">
+                <img src="{{ art.imagen.url }}" class="image" alt="{{art.title}}">
             </picture>
             <a href="{% url 'store_app:articulo_pub' art.slug %}" class="section__link">Ver</a>
         </div>

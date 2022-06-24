@@ -2,13 +2,12 @@ new Vue({
     el: '#num_car',
     delimiters: ['{$', '$}'],
     data: {
-        lista_prod: '',
+        nc: '',
     },
     created() {
         var self = this;
         axios.get('/api/num-car/').then(function (response) {
-            self.lista_prod = response.data;
-            console.log(response.data)
+            self.nc = response.data;
         })
         .catch(function (error){
             console.log(error);

@@ -2,8 +2,10 @@ from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['*']
+
+ALLOWED_ORIGINS = ['https://exonica.com.mx']
+CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
 
 # Database
